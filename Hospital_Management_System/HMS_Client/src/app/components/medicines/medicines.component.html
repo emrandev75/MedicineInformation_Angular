@@ -1,0 +1,130 @@
+<div class="container">
+  <div class="row">
+    <p class="display-4 alert alert-primary text-center col-12">Medicine Information</p>
+    <div class="col-4">
+
+      <!--<form (ngSubmit)="insertTest()">
+        <div>
+          <label>Test Name</label>
+          <input name="testName" type="text" [(ngModel)]="POSTTEST.testName" class="form-control" />
+        </div>
+        <div>
+          <label>Test Type</label>
+          <input name="testType" type="text" [(ngModel)]="POSTTEST.testType" class="form-control" />
+        </div>
+        <div>
+          <label>Test Price</label>
+          <input name="price" type="number" [(ngModel)]="POSTTEST.price" class="form-control" />
+        </div>
+        <div class="offset-5 mt-1">
+         <a class="btn btn-outline-info">SAVE</a>
+        </div>
+      </form>-->
+      <form (ngSubmit)="insertMedicines()" class="bg-info">
+        <div>
+          <label for="medicineName">Medicine Name</label>
+          <input id="medicineName" name="medicineName" type="text" [(ngModel)]="POSTMedicines.medicineName" class="form-control" />
+        </div>
+        <div>
+          <label for="weight">Weight</label>
+          <input id="weight" name="weight" type="text" [(ngModel)]="POSTMedicines.weight" class="form-control" />
+        </div>
+        <div>
+          <label for="medicineType">Medicine Type</label>
+          <select id="medicineType" name="medicineType" [(ngModel)]="POSTMedicines.medicineType" class="form-select">
+            <option [ngValue]="1">Allopathy</option>
+            <option [ngValue]="2">Homeopathy</option>
+          </select>
+        </div>
+        <div>
+          <label for="dosageForms">Dosage Form</label>
+          <select id="dosageForms" name="dosageForms" [(ngModel)]="POSTMedicines.dosageForms" class="form-select">
+            <option [ngValue]="1">Liquid</option>
+            <option [ngValue]="2">Tablet</option>
+            <option [ngValue]="3">Capsules</option>
+            <option [ngValue]="4">Cream</option>
+            <option [ngValue]="5">Suppositories</option>
+            <option [ngValue]="6">Drops</option>
+            <option [ngValue]="7">Inhalers</option>
+            <option [ngValue]="8">Injection</option>
+          </select>
+        </div>
+        <div>
+          <label for="expireDate">Expire Date</label>
+          <input id="expireDate" name="expireDate" type="date" [(ngModel)]="POSTMedicines.expireDate" class="form-control" />
+        </div>
+        <div>
+          <label for="quantity">Quantity</label>
+          <input id="quantity" name="quantity" type="number" [(ngModel)]="POSTMedicines.quantity" class="form-control" />
+        </div>
+        <div>
+          <label for="sellPrice">PerUnit Price</label>
+          <input id="sellPrice" name="sellPrice" type="number" [(ngModel)]="POSTMedicines.sellPrice" class="form-control" />
+        </div>
+        <div>
+          <label for="discount">Discount</label>
+          <input id="discount" name="discount" type="number" [(ngModel)]="POSTMedicines.discount" class="form-control" />
+        </div>
+        <div>
+          <label for="medicineGenericID">MedicineGeneric Name</label>
+          <select id="medicineGenericID" name="medicineGenericID" [(ngModel)]="POSTMedicines.medicineGenericID" class="form-select">
+            <option *ngFor="let medicineGeneric of medicineGenerics" [ngValue]="medicineGeneric.medicineGenericID">
+              {{ medicineGeneric.medicineGenericNames }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <label for="manufacturerID">Manufacturer Name</label>
+          <select id="manufacturerID" name="manufacturerID" [(ngModel)]="POSTMedicines.manufacturerID" class="form-select">
+            <option *ngFor="let manufacturer of manufacturers" [ngValue]="manufacturer.manufacturerID">
+              {{ manufacturer.manufacturerName }}
+            </option>
+          </select>
+        </div>
+        <div class="offset-5 mt-1">
+          <button type="submit" class="btn btn-outline-info text-black">SAVE</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-8">
+      <table class="table table-bordered">
+        <thead class="table table-info">
+          <tr>
+            <th>Medicine Name</th>
+            <th>Weight</th>
+            <th>MedicineType</th>
+            <th>DosageForm</th>
+            <th>ExpireDate</th>
+            <th>Quantity</th>
+            <th>PerUnitPrice</th>
+            <th>Discount</th>
+            <th>TotalAmount</th>
+            <th>MedicineGenericName</th>
+            <th>ManufacturerName</th>         
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ok of Medicine">
+            <td>{{ok.medicineName}}</td>
+            <td>{{ok.weight}}</td>
+            <td>{{ ok.medicineType === 1 ? 'Allopathy' : 'Homeopathy' }}</td>
+            <td>{{ ok.dosageForms === 1 ? 'Liquid' : ok.dosageForms === 2 ? 'Tablet' : ok.dosageForms === 3 ? 'Capsules' : ok.dosageForms === 4 ? 'Cream' : ok.dosageForms === 5 ? 'Suppositories' : ok.dosageForms === 6 ? 'Drops' : ok.dosageForms === 7 ? 'Inhalers' : 'Injection' }}</td>
+            <td>{{ok.expireDate|date:'yyyy-MM-dd'}}</td>
+            <td>{{ok.quantity}}</td>
+            <td>{{ok.sellPrice}}</td>
+            <td>{{ ok.discount }}%</td>
+            <td>{{ calculateOriginalPrice(ok) | currency }}</td>
+            <td>{{ getMedicineGenericName(ok.medicineGenericID) }}</td>
+            <td>{{ getManufacturerName(ok.manufacturerID) }}</td>
+            <td class="text-center">
+              <a (click)="PopulateMedicine(ok)" class="btn btn-primary mr-5">EDIT</a>
+              <a (click)="MedicinDelete(ok.medicineID)" class="btn btn-danger">DELETE</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
